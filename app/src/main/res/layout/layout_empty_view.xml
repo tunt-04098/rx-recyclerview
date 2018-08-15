@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/empty_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/empty_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#777"
+            tools:text="empty" />
+
+        <FrameLayout
+            android:id="@+id/custom_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true" />
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/empty_progress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:animationResolution="33"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/circular_progress_bar"
+        android:indeterminateDuration="2000" />
+
+    <LinearLayout
+        android:id="@+id/empty_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/empty_error_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#777"
+            tools:text="error" />
+
+        <Button
+            android:id="@+id/empty_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_below="@+id/textPagingError"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_retry_button"
+            android:text="@string/retry"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</RelativeLayout>
