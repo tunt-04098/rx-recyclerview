@@ -111,13 +111,16 @@ public abstract class PagingRecyclerAdapter<Item> extends RecyclerAdapter<Item> 
 
     @Override
     public void onAfterBindViewHolder(SimpleViewHolder holder, int position) {
-        if (getBaseItemViewType(position) == TYPE_LOADING) {
-            onBindPagingLoadingView(holder, position);
-            return;
-        }
-        if (getBaseItemViewType(position) == TYPE_ERROR) {
-            onBindPagingErrorView(holder, position);
-            return;
+        switch (getBaseItemViewType(position)) {
+            case TYPE_LOADING:
+                onBindPagingLoadingView(holder, position);
+                break;
+            case TYPE_ERROR:
+                onBindPagingErrorView(holder, position);
+                break;
+            default:
+                onBindItemView(holder, position);
+                break;
         }
     }
 
@@ -159,6 +162,8 @@ public abstract class PagingRecyclerAdapter<Item> extends RecyclerAdapter<Item> 
     public void onBindPagingLoadingView(SimpleViewHolder holder, int position) {}
 
     public void onBindPagingErrorView(SimpleViewHolder holder, int position) {}
+
+    public void onBindItemView(SimpleViewHolder holder, int position) {}
 
     public int getPagingItemViewType(int position) {
         return TYPE_ITEM;
