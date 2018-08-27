@@ -17,16 +17,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * Created by TuNT on 8/15/2018.
  * tunt.program.04098@gmail.com
  */
-public class BindingViewHolder <Item> extends SimpleViewHolder implements Selector.OnSelectorChangeListener {
+public class BindingViewHolder<Item> extends SimpleViewHolder implements Selector.OnSelectorChangeListener {
 
     private Item item;
     private ViewDataBinding binding;
-    private OnItemClickListener<Item> onItemClickListener;
+
     private Selector selector;
 
     public BindingViewHolder(View itemView, Selector selector) {
         super(itemView);
-        RxView.clicks(itemView).throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread()).subscribe(aVoid -> onClick());
         this.selector = selector;
         initSelector(selector);
         binding = DataBindingUtil.bind(itemView);
@@ -53,17 +52,12 @@ public class BindingViewHolder <Item> extends SimpleViewHolder implements Select
         return item;
     }
 
-    void setOnItemClickListener(OnItemClickListener<Item> onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    private void onClick() {
+    @Override
+    protected void onClick() {
+        super.onClick();
         int position = getAdapterPosition();
         if (selector != null) {
             selector.toggle(position);
-        }
-        if (onItemClickListener != null) {
-            onItemClickListener.onItemClick(itemView, getData(), position);
         }
         itemView.setSelected(selector.isSelected(position));
     }

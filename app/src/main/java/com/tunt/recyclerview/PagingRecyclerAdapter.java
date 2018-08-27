@@ -69,7 +69,7 @@ public abstract class PagingRecyclerAdapter<Item> extends RecyclerAdapter<Item> 
     }
 
     @Override
-    public final View getBaseItemView(LayoutInflater inflater, ViewGroup parent, int viewType) {
+    public View getBaseItemView(LayoutInflater inflater, ViewGroup parent, int viewType) {
         if (viewType == TYPE_LOADING) {
             return createPagingLoadingView(inflater, parent);
         }
@@ -80,7 +80,7 @@ public abstract class PagingRecyclerAdapter<Item> extends RecyclerAdapter<Item> 
     }
 
     @Override
-    public final int getBaseItemViewType(int position) {
+    public int getBaseItemViewType(int position) {
         if (position < getCollectionItemCount()) {
             return getPagingItemViewType(position);
         }
@@ -88,7 +88,7 @@ public abstract class PagingRecyclerAdapter<Item> extends RecyclerAdapter<Item> 
     }
 
     @Override
-    public final int getItemCount() {
+    public int getItemCount() {
         int count = super.getItemCount();
         if (pagingState != PagingState.IDLE) {
             count++;
@@ -106,6 +106,18 @@ public abstract class PagingRecyclerAdapter<Item> extends RecyclerAdapter<Item> 
                     holder.getItemView().post(() -> onNextPageListener.onNextPage());
                 }
             }
+        }
+    }
+
+    @Override
+    public void onAfterBindViewHolder(SimpleViewHolder holder, int position) {
+        if (getBaseItemViewType(position) == TYPE_LOADING) {
+            onBindPagingLoadingView(holder, position);
+            return;
+        }
+        if (getBaseItemViewType(position) == TYPE_ERROR) {
+            onBindPagingErrorView(holder, position);
+            return;
         }
     }
 
@@ -143,6 +155,10 @@ public abstract class PagingRecyclerAdapter<Item> extends RecyclerAdapter<Item> 
     }
 
     public abstract View getPagingItemView(LayoutInflater inflater, ViewGroup parent, int viewType);
+
+    public void onBindPagingLoadingView(SimpleViewHolder holder, int position) {}
+
+    public void onBindPagingErrorView(SimpleViewHolder holder, int position) {}
 
     public int getPagingItemViewType(int position) {
         return TYPE_ITEM;

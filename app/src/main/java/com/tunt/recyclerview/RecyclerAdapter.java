@@ -126,7 +126,6 @@ public abstract class RecyclerAdapter<Item> extends RecyclerView.Adapter<SimpleV
 
     @Override
     public final SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View viewItem;
         if (viewType == TYPE_HEADER) {
             viewItem = getHeaderView(LayoutInflater.from(parent.getContext()), parent);
@@ -156,11 +155,10 @@ public abstract class RecyclerAdapter<Item> extends RecyclerView.Adapter<SimpleV
                             });
                 }
             }
-
-
         } else {
             holder = new SimpleViewHolder(viewItem);
         }
+        holder.setOnItemClickListener(onItemClickListener);
 
         onAfterCreateViewHolder(holder, viewType);
 
@@ -176,6 +174,9 @@ public abstract class RecyclerAdapter<Item> extends RecyclerView.Adapter<SimpleV
             int positionInCollection = position - offsetPosition;
             ((BindingViewHolder<Item>) holder).bind(getItem(positionInCollection),
                     new CollectionPosition(getCollectionItemCount(), position), mBindingData);
+        } else {
+            int positionInCollection = position - offsetPosition;
+            holder.bind(getItem(positionInCollection));
         }
 
         onAfterBindViewHolder(holder, position);
