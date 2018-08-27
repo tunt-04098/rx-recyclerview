@@ -174,9 +174,6 @@ public abstract class RecyclerAdapter<Item> extends RecyclerView.Adapter<SimpleV
             int positionInCollection = position - offsetPosition;
             ((BindingViewHolder<Item>) holder).bind(getItem(positionInCollection),
                     new CollectionPosition(getCollectionItemCount(), position), mBindingData);
-        } else {
-            int positionInCollection = position - offsetPosition;
-            holder.bind(getItem(positionInCollection));
         }
 
         onAfterBindViewHolder(holder, position);

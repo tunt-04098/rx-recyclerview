@@ -33,7 +33,7 @@ public class SimpleViewHolder<Item> extends RecyclerView.ViewHolder {
         return itemView;
     }
 
-    void bind(Item item) {
+    public void bind(Item item) {
         this.item = item;
     }
 
